@@ -40,6 +40,11 @@ app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\//] 
 const userRouter = require('./router/user')
 app.use('/api', userRouter)
 
+// 导入个人中心路由模块
+const userinfoRouter = require('./router/userinfo')
+// 以 /my 开头的接口，都是有权限的接口，需要进行 Token 身份认证
+app.use('/my',userinfoRouter)
+
 // 全局错误级别中间件 写在最下面
 app.use(function (err, req, res, next) {
     // 数据验证失败
